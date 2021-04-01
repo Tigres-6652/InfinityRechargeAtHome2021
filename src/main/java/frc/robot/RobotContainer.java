@@ -30,7 +30,7 @@ public class RobotContainer {
   private  DriveTrain driveTrain;
   private  Shooter shooter;
   private  Intake intake;
-
+  
   private  OI oi;
 
 
@@ -53,6 +53,7 @@ public class RobotContainer {
     oi = new OI();
     gyro = new NavX();
     encoders = new MagEncoders();
+    
   }
 
   /**

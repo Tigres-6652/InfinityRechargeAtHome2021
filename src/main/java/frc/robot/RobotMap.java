@@ -10,13 +10,14 @@ public class RobotMap {
 
     
 	// PUERTOS DESTINADOS AL CHASSIS
-    public static int MOTOR_PORT_RIGHT_FRONT = 2;
-    public static int MOTOR_PORT_RIGHT_MIDDLE = 3;
-    public static int MOTOR_PORT_RIGHT_REAR = 4;
+    public static int MOTOR_PORT_RIGHT_FRONT = 5;
+    public static int MOTOR_PORT_RIGHT_MIDDLE = 6;
+    public static int MOTOR_PORT_RIGHT_REAR = 7;
 
-    public static int MOTOR_PORT_LEFT_FRONT = 7; 
-    public static int MOTOR_PORT_LEFT_MIDDLE = 6; 
-    public static int MOTOR_PORT_LEFT_REAR = 5;  
+    public static int MOTOR_PORT_LEFT_FRONT = 2; 
+    public static int MOTOR_PORT_LEFT_MIDDLE = 3; 
+    public static int MOTOR_PORT_LEFT_REAR = 4;  
+    
 
 
     // PUERTOS DESTINADOS AL SHOOTER

@@ -1,6 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
 
@@ -37,8 +34,8 @@ public class DriveTrain extends SubsystemBase {
 
   public void drive(double speedX, double speedY){
 
-    double rightSpeed = -speedX - speedY;
-    double leftSpeed = -speedX + speedY;
+    double rightSpeed = -speedX + speedY;
+    double leftSpeed = -speedX - speedY;
 
     motorLeft1.set(ControlMode.PercentOutput, leftSpeed);
     motorLeft2.set(ControlMode.PercentOutput, leftSpeed);
