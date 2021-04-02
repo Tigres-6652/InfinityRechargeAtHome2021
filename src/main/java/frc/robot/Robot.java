@@ -76,7 +76,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
 
-    /*if((getRobotContainer().getMagEncoders.() < 5)){
+    /*if((getRobotContainer().getMagEncoders() < 5)){
 
       getRobotContainer().getDriveTrain().chassis.arcadeDrive(0.5, 0);
     }
