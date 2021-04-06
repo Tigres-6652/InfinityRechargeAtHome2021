@@ -4,7 +4,7 @@
 package frc.robot.resources;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
-import frc.robot.Robot;
+
 
 /** Add your docs here. */
 public class MagEncoders {
