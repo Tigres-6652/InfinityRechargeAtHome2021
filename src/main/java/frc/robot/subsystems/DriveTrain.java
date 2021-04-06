@@ -46,5 +46,17 @@ public class DriveTrain extends SubsystemBase {
     motorRight3.set(ControlMode.PercentOutput, rightSpeed);
   }
 
+  public void driveAutonomus(double rightSpeedAutonomus, double leftSpeedAutonomus){
+
+    motorLeft1.set(ControlMode.PercentOutput, leftSpeedAutonomus);
+    motorLeft2.set(ControlMode.PercentOutput, leftSpeedAutonomus);
+    motorLeft3.set(ControlMode.PercentOutput, leftSpeedAutonomus);
+
+    motorRight1.set(ControlMode.PercentOutput, rightSpeedAutonomus);
+    motorRight2.set(ControlMode.PercentOutput, rightSpeedAutonomus);
+    motorRight3.set(ControlMode.PercentOutput, rightSpeedAutonomus);
+
+  }
+
 
 }

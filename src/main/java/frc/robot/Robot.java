@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.DefaultDrive;
+import frc.robot.subsystems.DriveTrain;
 
 
 /**
@@ -21,6 +22,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private static RobotContainer m_robotContainer;
+  DriveTrain driveTrain;
   
 
   /**
@@ -32,7 +34,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    
+    driveTrain = new DriveTrain();
   }
 
   /**
@@ -78,18 +80,21 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {
+  public void autonomousPeriodic(){
+    double rightDistance = getRobotContainer().getMagEncoders().getRightEncoderDistance();
+    double leftDistance = getRobotContainer().getMagEncoders().getLeftEncoderDistance();
+    double setpoint = getRobotContainer().getMagEncoders().getMagEncodersDistance(rightDistance, leftDistance);
+    double rightSpeed = 0.3;
+    double leftSpeed = -0.3;
+    double stopSeed = 0;
 
-    /*if((getRobotContainer().getMagEncoders.() < 5)){
-
-      getRobotContainer().getDriveTrain().chassis.arcadeDrive(0.5, 0);
+    //Robot avanza 6.56168 pies = 2 metros
+    if(setpoint < 6.56168){
+      driveTrain.driveAutonomus(rightSpeed, leftSpeed);
     }
     else{
-      getRobotContainer().getDriveTrain().chassis.stopMotor();
-     
-      getRobotContainer().getOI().encoder.reset();
-    }*/
-
+      driveTrain.driveAutonomus(stopSeed, stopSeed);
+    }
 
   }
 
