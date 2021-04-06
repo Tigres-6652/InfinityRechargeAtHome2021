@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -35,6 +36,18 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     driveTrain = new DriveTrain();
+
+    //Inicializando Magencoders
+    
+    getRobotContainer().getDriveTrain().motorLeft1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,10);
+    getRobotContainer().getDriveTrain().motorRight1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,10);
+
+    getRobotContainer().getDriveTrain().motorLeft1.setSensorPhase(true);
+    getRobotContainer().getDriveTrain().motorRight1.setSensorPhase(false);
+
+    //Resetear encoders a cero
+    getRobotContainer().getDriveTrain().motorLeft1.setSelectedSensorPosition(0,0,10);
+    getRobotContainer().getDriveTrain().motorRight1.setSelectedSensorPosition(0,0,10);
   }
 
   /**

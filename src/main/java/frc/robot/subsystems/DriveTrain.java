@@ -10,7 +10,7 @@ import frc.robot.RobotMap;
 public class DriveTrain extends SubsystemBase {
   /** Creates a new DriveTrain. */
 
-  TalonSRX motorRight1, motorRight2, motorRight3,
+  public TalonSRX motorRight1, motorRight2, motorRight3,
                motorLeft1, motorLeft2, motorLeft3;
 
 
