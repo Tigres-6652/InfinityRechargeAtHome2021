@@ -17,8 +17,16 @@ public class PID {
     //Variables necesarias para el kI
     double errorSum = 0;
     double lastTimeStamp = 0;
-    double dt = Timer.getFPGATimestamp() - lastTimeStamp;
+    
     double iLimit = 1;
+
+    //Variables necesarias para el kD
+    double lastError = 0;
+
+    public double getDt(double lastTimeStamp){
+        double dt = Timer.getFPGATimestamp() - lastTimeStamp;
+        return dt;
+    }
     
     public double getError(double setpoint){
 
@@ -27,8 +35,8 @@ public class PID {
         return error;
     }
 
-    public double getOutputSpeed(double error, double errorSum){
-        double outputSpeed = Constants.kP*error + Constants.kI*errorSum;
+    public double getOutputSpeed(double error, double errorSum, double errorRate){
+        double outputSpeed = Constants.kP*error + Constants.kI*errorSum + Constants.kD*errorRate;
 
         return outputSpeed;
     }

@@ -82,6 +82,7 @@ public class Robot extends TimedRobot {
     //Condiciones iniciales
     getRobotContainer().getPID().errorSum = 0;
     getRobotContainer().getPID().lastTimeStamp = Timer.getFPGATimestamp();
+    getRobotContainer().getPID().lastError = 0;
 
     /*m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
@@ -91,6 +92,13 @@ public class Robot extends TimedRobot {
     }*/
   }
 
+  double setpoint1 = 13.1234; //4 metros
+  double errorSum = getRobotContainer().getPID().errorSum;
+  double lastTimeStamp = 0;
+  double iLimit = getRobotContainer().getPID().iLimit;
+  double lastError = getRobotContainer().getPID().lastError;
+
+
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic(){
@@ -98,7 +106,7 @@ public class Robot extends TimedRobot {
     double leftDistance = getRobotContainer().getMagEncoders().getLeftEncoderDistance();
     double setpoint = getRobotContainer().getMagEncoders().getMagEncodersDistance(rightDistance, leftDistance);
   
-    double speed = 3;
+    double speed = 0.3;
     double stopSpeed = 0;
   
     //Robot avanza 6.56168 pies = 2 metros
@@ -109,26 +117,28 @@ public class Robot extends TimedRobot {
       driveTrain.driveAutonomus(stopSpeed, stopSpeed);
     }
 
-   /* PRUEBA DEL PID, FALTA LA IMPLEMENTACION DE LA CONSTANTE KD, CUANDO SE QUIERA PROBRAR, COMENTAR LO DEMAS DEL PERIODO AUTONOMO
-   DEL PERIODO AUTONOMO  MENOS la declaracion de stopSpeed
+   /* PRUEBA DEL PID, CUANDO SE QUIERA PROBRAR, COMENTAR LO DEMAS DEL autonomousPeriodic MENOS la declaracion de stopSpeed
+     
    
-
-    double setpoint1 = 13.1234; //4 metros
     double error = getRobotContainer().getPID().getError(setpoint1);
-    double iLimit = getRobotContainer().getPID().iLimit;
-    double errorSum = getRobotContainer().getPID().errorSum;
-    double dt = getRobotContainer().getPID().dt;
+    double dt = getRobotContainer().getPID().getDt(lastTimeStamp);
+    
     if(Math.abs(error)<iLimit){
       errorSum = errorSum + error*dt;
     }
 
-    double outputSpeed = getRobotContainer().getPID().getOutputSpeed(error, errorSum);
+    double errorRate = (error - lastError)/dt;
+
+    double outputSpeed = getRobotContainer().getPID().getOutputSpeed(error, errorSum, errorRate);
     if(error != 0){
       driveTrain.driveAutonomus(outputSpeed, -outputSpeed);
     }
     else{
       driveTrain.driveAutonomus(stopSpeed, stopSpeed);
     }
+    //Actualizar last variables
+    lastTimeStamp = Timer.getFPGATimestamp();
+    lastError = error;
     */
 
   }
