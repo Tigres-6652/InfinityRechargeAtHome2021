@@ -97,17 +97,39 @@ public class Robot extends TimedRobot {
     double rightDistance = getRobotContainer().getMagEncoders().getRightEncoderDistance();
     double leftDistance = getRobotContainer().getMagEncoders().getLeftEncoderDistance();
     double setpoint = getRobotContainer().getMagEncoders().getMagEncodersDistance(rightDistance, leftDistance);
-    double rightSpeed = 0.3;
-    double leftSpeed = -0.3;
-    double stopSeed = 0;
-
+  
+    double speed = 3;
+    double stopSpeed = 0;
+  
     //Robot avanza 6.56168 pies = 2 metros
     if(setpoint < 6.56168){
-      driveTrain.driveAutonomus(rightSpeed, leftSpeed);
+      driveTrain.driveAutonomus(speed, -speed);
     }
     else{
-      driveTrain.driveAutonomus(stopSeed, stopSeed);
+      driveTrain.driveAutonomus(stopSpeed, stopSpeed);
     }
+
+   /* PRUEBA DEL PID, FALTA LA IMPLEMENTACION DE LA CONSTANTE KD, CUANDO SE QUIERA PROBRAR, COMENTAR LO DEMAS DEL PERIODO AUTONOMO
+   DEL PERIODO AUTONOMO  MENOS la declaracion de stopSpeed
+   
+
+    double setpoint1 = 13.1234; //4 metros
+    double error = getRobotContainer().getPID().getError(setpoint1);
+    double iLimit = getRobotContainer().getPID().iLimit;
+    double errorSum = getRobotContainer().getPID().errorSum;
+    double dt = getRobotContainer().getPID().dt;
+    if(Math.abs(error)<iLimit){
+      errorSum = errorSum + error*dt;
+    }
+
+    double outputSpeed = getRobotContainer().getPID().getOutputSpeed(error, errorSum);
+    if(error != 0){
+      driveTrain.driveAutonomus(outputSpeed, -outputSpeed);
+    }
+    else{
+      driveTrain.driveAutonomus(stopSpeed, stopSpeed);
+    }
+    */
 
   }
 

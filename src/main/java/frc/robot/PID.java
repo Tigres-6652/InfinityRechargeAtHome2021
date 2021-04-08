@@ -8,33 +8,31 @@ import edu.wpi.first.wpilibj.Timer;
 
 /** Add your docs here. */
 public class PID {
+
+    //Variables necesarias para el kP
     double rightEncoder = Robot.getRobotContainer().getMagEncoders().getRightEncoderDistance();
     double leftEncoder = Robot.getRobotContainer().getMagEncoders().getLeftEncoderDistance();
+    double sensorPosition = Robot.getRobotContainer().getMagEncoders().getMagEncodersDistance(rightEncoder, leftEncoder);
 
-    double encoders = Robot.getRobotContainer().getMagEncoders().getMagEncodersDistance(rightEncoder, leftEncoder);
-  
-    double setpoint = 5;
-
-    double error = setpoint - encoders;
-
-    double kP = Constants.kP;
-    double kI = Constants.kI;
-    double kD = Constants.kD;
-
-    //public double errorSum = 0;
-    public double lastTimeStamp = 0;
-
+    //Variables necesarias para el kI
+    double errorSum = 0;
+    double lastTimeStamp = 0;
     double dt = Timer.getFPGATimestamp() - lastTimeStamp;
+    double iLimit = 1;
+    
+    public double getError(double setpoint){
 
-    public double errorSum = error * dt;
+        double error = setpoint - sensorPosition;
 
-
-    public double getMotorSpeedOutput(){
-
-        double motorSpeedOutput = kP * error + kI * errorSum;
-
-        return motorSpeedOutput;
+        return error;
     }
+
+    public double getOutputSpeed(double error, double errorSum){
+        double outputSpeed = Constants.kP*error + Constants.kI*errorSum;
+
+        return outputSpeed;
+    }
+
 
 
 
