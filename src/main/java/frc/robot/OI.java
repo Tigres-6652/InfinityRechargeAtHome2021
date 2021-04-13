@@ -15,12 +15,13 @@ import frc.robot.subsystems.Intake;
 public class OI {
     Intake intake;
     Joystick pilot;
-    JoystickButton aButton, bButton;
+    JoystickButton aButton,bButton;
 
 
     public OI(){
         intake = new Intake();
         pilot = new Joystick(0);
+
         aButton = new JoystickButton(pilot, 0); // JoystickButton(joytick objeto, port del boton)
         bButton = new JoystickButton(pilot, 1);
 
@@ -28,7 +29,6 @@ public class OI {
 
     public void configureButtonBindings(){
         //botones y comandos
-        //Mientras aButton esté presionado se ejecuta IntakeCommand
         aButton.whileHeld(new IntakeCommand(Robot.getRobotContainer().getIntake()));
         bButton.whileHeld(new StartShooting(Robot.getRobotContainer().getShooter()));
 

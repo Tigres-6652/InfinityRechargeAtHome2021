@@ -3,11 +3,14 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.DefaultDrive;
+import frc.robot.subsystems.DriveTrain;
 
 
 /**
@@ -20,6 +23,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private static RobotContainer m_robotContainer;
+  DriveTrain driveTrain;
   
 
   /**
@@ -31,7 +35,19 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    driveTrain = new DriveTrain();
+
+    //Inicializando Magencoders
     
+    getRobotContainer().getDriveTrain().motorLeft1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,10);
+    getRobotContainer().getDriveTrain().motorRight1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,10);
+
+    getRobotContainer().getDriveTrain().motorLeft1.setSensorPhase(true);
+    getRobotContainer().getDriveTrain().motorRight1.setSensorPhase(false);
+
+    //Resetear encoders a cero
+    getRobotContainer().getDriveTrain().motorLeft1.setSelectedSensorPosition(0,0,10);
+    getRobotContainer().getDriveTrain().motorRight1.setSelectedSensorPosition(0,0,10);
   }
 
   /**
@@ -60,32 +76,81 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    //Reinicia ambos encoders cada vez que arranca el periodo autonomo
+    getRobotContainer().getMagEncoders().rightEncoder.reset();
+    getRobotContainer().getMagEncoders().leftEncoder.reset();
+    //Condiciones iniciales
+    getRobotContainer().getPID().errorSum = 0;
+    getRobotContainer().getPID().lastTimeStamp = Timer.getFPGATimestamp();
+    getRobotContainer().getPID().lastError = 0;
+
+    /*m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
-    }
-
-    
-
-
+    }*/
   }
+
+  double setpoint1 = 13.1234; //4 metros
+  double errorSum = getRobotContainer().getPID().errorSum;
+  double lastTimeStamp = 0;
+  double iLimit = getRobotContainer().getPID().iLimit;
+  double lastError = getRobotContainer().getPID().lastError;
+
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {
+
+  public void autonomousPeriodic(){
+    double rightDistance = getRobotContainer().getMagEncoders().getRightEncoderDistance();
+    double leftDistance = getRobotContainer().getMagEncoders().getLeftEncoderDistance();
+    double setpoint = getRobotContainer().getMagEncoders().getMagEncodersDistance(rightDistance, leftDistance);
+  
+    double speed = 0.3;
+    double stopSpeed = 0;
+  
+    //Robot avanza 6.56168 pies = 2 metros
+    if(setpoint < 6.56168){
+      driveTrain.driveAutonomus(speed, -speed);
+    }
+    else{
+      driveTrain.driveAutonomus(stopSpeed, stopSpeed);
+    }
+
 
     /*if((getRobotContainer().getMagEncoders() < 5)){
 
       getRobotContainer().getDriveTrain().chassis.arcadeDrive(0.5, 0);
+>>>>>>> main
     }
     else{
-      getRobotContainer().getDriveTrain().chassis.stopMotor();
-     
-      getRobotContainer().getOI().encoder.reset();
-    }*/
+      driveTrain.driveAutonomus(stopSpeed, stopSpeed);
+    }
 
+   /* PRUEBA DEL PID, CUANDO SE QUIERA PROBRAR, COMENTAR LO DEMAS DEL autonomousPeriodic MENOS la declaracion de stopSpeed
+     
+   
+    double error = getRobotContainer().getPID().getError(setpoint1);
+    double dt = getRobotContainer().getPID().getDt(lastTimeStamp);
+    
+    if(Math.abs(error)<iLimit){
+      errorSum = errorSum + error*dt;
+    }
+
+    double errorRate = (error - lastError)/dt;
+
+    double outputSpeed = getRobotContainer().getPID().getOutputSpeed(error, errorSum, errorRate);
+    if(error != 0){
+      driveTrain.driveAutonomus(outputSpeed, -outputSpeed);
+    }
+    else{
+      driveTrain.driveAutonomus(stopSpeed, stopSpeed);
+    }
+    //Actualizar last variables
+    lastTimeStamp = Timer.getFPGATimestamp();
+    lastError = error;
+    */
 
   }
 

@@ -4,12 +4,12 @@
 package frc.robot.resources;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
-import frc.robot.Robot;
+
 
 /** Add your docs here. */
 public class MagEncoders {
 
-    Encoder rightEncoder, leftEncoder;
+    public Encoder rightEncoder, leftEncoder;
 
 
     public MagEncoders(){
@@ -46,11 +46,8 @@ public class MagEncoders {
     }
     //Devuelve el promedio de ambos encoders
     public double getMagEncodersDistance(double rightDistance, double leftDistance){
-        rightDistance = Robot.getRobotContainer().getMagEncoders().getRightEncoderDistance();
-        leftDistance = Robot.getRobotContainer().getMagEncoders().getLeftEncoderDistance();
-        double encodersDistance;
     
-        encodersDistance = ((rightDistance + leftDistance)/2);
+        double encodersDistance = ((rightDistance + leftDistance)/2);
         return encodersDistance;
     }
 

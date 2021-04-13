@@ -10,7 +10,7 @@ import frc.robot.RobotMap;
 public class DriveTrain extends SubsystemBase {
   /** Creates a new DriveTrain. */
 
-  TalonSRX motorRight1, motorRight2, motorRight3,
+  public TalonSRX motorRight1, motorRight2, motorRight3,
                motorLeft1, motorLeft2, motorLeft3;
 
 
@@ -44,6 +44,18 @@ public class DriveTrain extends SubsystemBase {
     motorRight1.set(ControlMode.PercentOutput, rightSpeed);
     motorRight2.set(ControlMode.PercentOutput, rightSpeed);
     motorRight3.set(ControlMode.PercentOutput, rightSpeed);
+  }
+
+  public void driveAutonomus(double rightSpeedAutonomus, double leftSpeedAutonomus){
+
+    motorLeft1.set(ControlMode.PercentOutput, leftSpeedAutonomus);
+    motorLeft2.set(ControlMode.PercentOutput, leftSpeedAutonomus);
+    motorLeft3.set(ControlMode.PercentOutput, leftSpeedAutonomus);
+
+    motorRight1.set(ControlMode.PercentOutput, rightSpeedAutonomus);
+    motorRight2.set(ControlMode.PercentOutput, rightSpeedAutonomus);
+    motorRight3.set(ControlMode.PercentOutput, rightSpeedAutonomus);
+
   }
 
 

@@ -36,6 +36,8 @@ public class RobotContainer {
 
   private NavX gyro;
   private MagEncoders encoders;
+
+  private PID pid;
   
   
 
@@ -109,6 +111,11 @@ public class RobotContainer {
   public MagEncoders getMagEncoders(){
 
     return encoders;
+  }
+
+  public PID getPID(){
+
+    return pid;
   }
 
 
