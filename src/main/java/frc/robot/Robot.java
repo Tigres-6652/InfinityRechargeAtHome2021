@@ -101,6 +101,7 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during autonomous. */
   @Override
+
   public void autonomousPeriodic(){
     double rightDistance = getRobotContainer().getMagEncoders().getRightEncoderDistance();
     double leftDistance = getRobotContainer().getMagEncoders().getLeftEncoderDistance();
@@ -112,6 +113,16 @@ public class Robot extends TimedRobot {
     //Robot avanza 6.56168 pies = 2 metros
     if(setpoint < 6.56168){
       driveTrain.driveAutonomus(speed, -speed);
+    }
+    else{
+      driveTrain.driveAutonomus(stopSpeed, stopSpeed);
+    }
+
+
+    /*if((getRobotContainer().getMagEncoders() < 5)){
+
+      getRobotContainer().getDriveTrain().chassis.arcadeDrive(0.5, 0);
+>>>>>>> main
     }
     else{
       driveTrain.driveAutonomus(stopSpeed, stopSpeed);

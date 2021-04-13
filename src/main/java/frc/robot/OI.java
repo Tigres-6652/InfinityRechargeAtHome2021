@@ -15,14 +15,14 @@ import frc.robot.subsystems.Intake;
 public class OI {
     Intake intake;
     Joystick pilot;
-    JoystickButton aButton;
-    JoystickButton bButton;
+    JoystickButton aButton,bButton;
 
 
     public OI(){
         intake = new Intake();
         pilot = new Joystick(0);
-        aButton = new JoystickButton(pilot, 0);
+
+        aButton = new JoystickButton(pilot, 0); // JoystickButton(joytick objeto, port del boton)
         bButton = new JoystickButton(pilot, 1);
 
     }
